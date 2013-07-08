@@ -4,10 +4,10 @@
 
 import wx
 from math import sqrt
+import string
 
 # begin wxGlade: extracode
 # end wxGlade
-
 
 class MyFrame(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -27,15 +27,20 @@ class MyFrame(wx.Frame):
         self.text_ctrl_4 = wx.TextCtrl(self, -1, "")
         self.label_7 = wx.StaticText(self, -1, "Root 2")
         self.text_ctrl_5 = wx.TextCtrl(self, -1, "")
-        self.panel_5 = wx.Panel(self, -1)
-        self.panel_1 = wx.Panel(self, -1)
-        self.panel_2 = wx.Panel(self, -1)
-        self.panel_3 = wx.Panel(self, -1)
+        self.label_9 = wx.StaticText(self, -1, "Vertex location")
+        self.label_10 = wx.StaticText(self, -1, "X:")
+        self.text_ctrl_7 = wx.TextCtrl(self, -1, "")
+        self.label_11 = wx.StaticText(self, -1, "Y:")
+        self.text_ctrl_8 = wx.TextCtrl(self, -1, "")
+        self.label_8 = wx.StaticText(self, -1, "Another parser\nie. x^2 + 4x - 5")
+        self.text_ctrl_6 = wx.TextCtrl(self, -1, "")
+        self.button_2 = wx.Button(self, -1, "Parse")
 
         self.__set_properties()
         self.__do_layout()
 
         self.Bind(wx.EVT_BUTTON, self.parse, self.button_1)
+        self.Bind(wx.EVT_BUTTON, self.parse_experimantal, self.button_2)
         # end wxGlade
 
     def __set_properties(self):
@@ -52,15 +57,18 @@ class MyFrame(wx.Frame):
         self.text_ctrl_4.Enable(False)
         self.label_7.SetBackgroundColour(wx.Colour(234, 234, 234))
         self.text_ctrl_5.Enable(False)
-        self.panel_5.SetBackgroundColour(wx.Colour(234, 234, 234))
-        self.panel_1.SetBackgroundColour(wx.Colour(234, 234, 234))
-        self.panel_2.SetBackgroundColour(wx.Colour(234, 234, 234))
-        self.panel_3.SetBackgroundColour(wx.Colour(234, 234, 234))
+        self.text_ctrl_7.Enable(False)
+        self.text_ctrl_8.Enable(False)
+        self.text_ctrl_6.SetMinSize((160, 26))
         # end wxGlade
 
     def __do_layout(self):
         # begin wxGlade: MyFrame.__do_layout
         grid_sizer_1 = wx.GridSizer(2, 3, 0, 0)
+        sizer_8 = wx.BoxSizer(wx.VERTICAL)
+        sizer_9 = wx.BoxSizer(wx.VERTICAL)
+        sizer_11 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_10 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_5 = wx.BoxSizer(wx.VERTICAL)
         sizer_7 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_6 = wx.BoxSizer(wx.HORIZONTAL)
@@ -88,10 +96,18 @@ class MyFrame(wx.Frame):
         sizer_7.Add(self.text_ctrl_5, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         sizer_5.Add(sizer_7, 1, wx.EXPAND, 0)
         grid_sizer_1.Add(sizer_5, 1, wx.EXPAND, 0)
-        grid_sizer_1.Add(self.panel_5, 1, wx.EXPAND, 0)
-        grid_sizer_1.Add(self.panel_1, 1, wx.EXPAND, 0)
-        grid_sizer_1.Add(self.panel_2, 1, wx.EXPAND, 0)
-        grid_sizer_1.Add(self.panel_3, 1, wx.EXPAND, 0)
+        sizer_9.Add(self.label_9, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_10.Add(self.label_10, 0, wx.LEFT | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 10)
+        sizer_10.Add(self.text_ctrl_7, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_9.Add(sizer_10, 1, wx.EXPAND, 0)
+        sizer_11.Add(self.label_11, 0, wx.LEFT | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 12)
+        sizer_11.Add(self.text_ctrl_8, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_9.Add(sizer_11, 1, wx.EXPAND, 0)
+        grid_sizer_1.Add(sizer_9, 1, wx.EXPAND, 0)
+        sizer_8.Add(self.label_8, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_8.Add(self.text_ctrl_6, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_8.Add(self.button_2, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        grid_sizer_1.Add(sizer_8, 1, wx.EXPAND, 0)
         self.SetSizer(grid_sizer_1)
         self.Layout()
         self.Centre()
@@ -126,6 +142,89 @@ class MyFrame(wx.Frame):
             self.text_ctrl_4.SetValue(str(root1))
             self.text_ctrl_5.SetValue(str(root2))            
         print delta
+
+
+
+        self.text_ctrl_7.SetValue(str(-b_2/(2*a_2)))
+        self.text_ctrl_8.SetValue(str(-delta/(4*a_2)))
+        event.Skip()
+
+    def parse_experimantal(self, event):  # wxGlade: MyFrame.<event_handler>
+        print "Event handler `parse_experimantal' not implemented"
+        z=self.text_ctrl_6.GetValue()
+        z = z.split(' ')
+        print z
+        a = z[0]
+        a = a.split("x^2")
+        print a
+        if a[0] == "":
+            a_2 = 1
+        
+        if a[0] == "-" and a[1] == "":
+            a_2 = -1 
+
+        if not (a[0] == "" or (a[0] == "-" and a[1] == "")):
+            if a[0] == "-":
+                a_2 = float(a[0])
+                a_2 = (-1) * a_2
+            else:
+                a_2 = float(a[0])
+        
+
+
+        try:
+            b=z[2]
+
+            if 'x' in z[2]:
+
+                b = b.split("x")
+                if b[0] == "":
+                    b_2 = 1
+                else:
+                    b_2 = float(b[0])  
+                if z[1] == '-':
+                    b_2 = (-1) * b_2
+
+            
+                try:
+                    c = z[4]
+                    print c
+                    if z[3] == "-":
+                        c_2 = float(c)
+                        c_2 = (-1) * c_2
+                    else:
+                        c_2 = float(c)
+                except IndexError:
+                    c_2 = 0
+            
+            else:
+                b_2 = 0
+                if z[1] == '-' or z[1] == '+':
+                    
+
+                    c = z[2]
+                    print c
+                    if z[1] == "-":
+                        c_2 = float(c)
+                        c_2 = (-1) * c_2
+                    else:
+                        c_2 = float(c)
+                else:
+                    c_2 = 0
+
+        except IndexError:
+            b_2 = 0
+            c_2 = 0
+
+        print a_2
+        print b_2
+        print c_2
+
+        self.text_ctrl_1.SetValue(str(a_2))
+        self.text_ctrl_2.SetValue(str(b_2))
+        self.text_ctrl_3.SetValue(str(c_2))
+
+        self.parse(self)
         event.Skip()
 
 # end of class MyFrame
