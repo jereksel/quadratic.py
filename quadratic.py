@@ -117,8 +117,8 @@ class MyFrame(wx.Frame):
         else:
 
             discroot = sqrt(delta)
-            root1 = (-b_2 + discroot)/2
-            root2 = (-b_2 - discroot)/2
+            root1 = (-b_2 + discroot)/(2*a_2)
+            root2 = (-b_2 - discroot)/(2*a_2)
 
             print root1
             print root2
